@@ -12,6 +12,8 @@ const commandController = new CommandController();
 
 tg.router.when(new Telegram.TextCommand('/details', 'detailsCommand'), commandController)
     .when(new Telegram.TextCommand('/judgingCriteria', 'criteriaCommand'), commandController)
+    .when(new Telegram.TextCommand('/schedule', 'scheduleCommand'), commandController)
     .when(new Telegram.TextCommand('/editDetails', 'editDetailsCommand'), commandController)
     .when(new Telegram.TextCommand('/editCriteria', 'editCriteriaCommand'), commandController)
+    .when(new Telegram.TextCommand('/editSchedule', 'editScheduleCommand'), commandController)
     .otherwise(new OtherwiseController());

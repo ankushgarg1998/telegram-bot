@@ -13,26 +13,41 @@ class CommandController extends Telegram.TelegramBaseController {
         $.sendMessage(dataObj.criteria);
     }
 
+    scheduleHandler($) {
+        $.sendMessage(dataObj.schedule);
+    }
+
     editDetailsHandler($) {
-        if($.message.from.username == dataObj.masterUserName) {
+        if ($.message.from.username == dataObj.masterUserName) {
             $.sendMessage('Old Details : \n\n' + dataObj.details + '\n\nEnter the New Details :');
             $.waitForRequest
-            .then($ => {
-                dataObj.details = $.message.text;
-                $.sendMessage(`Details Updated! New Details are : \n\n ${dataObj.details}`);
-            })
-        }
-        else
+                .then($ => {
+                    dataObj.details = $.message.text;
+                    $.sendMessage(`Details Updated! New Details are : \n\n ${dataObj.details}`);
+                })
+        } else
             $.sendMessage('You are not authorized for this command!');
     }
 
     editCriteriaHandler($) {
-        if($.message.from.username == dataObj.masterUserName) {
+        if ($.message.from.username == dataObj.masterUserName) {
             $.sendMessage('Old Judging Criteria : \n\n' + dataObj.criteria + '\n\nEnter the New Judging Criteria :');
             $.waitForRequest
                 .then($ => {
                     dataObj.criteria = $.message.text;
                     $.sendMessage(`Judging Criteria Updated! New Judging Criteria is : \n\n ${dataObj.criteria}`);
+                })
+        } else
+            $.sendMessage('You are not authorized for this command!');
+    }
+
+    eidtScheduleHandler($) {
+        if ($.message.from.username == dataObj.masterUserName) {
+            $.sendMessage('Old Schedule : \n\n' + dataObj.schedule + '\n\nEnter the New Schedule :');
+            $.waitForRequest
+                .then($ => {
+                    dataObj.schedule = $.message.text;
+                    $.sendMessage(`Schedule Updated! New Schedule is : \n\n ${dataObj.schedule}`);
                 })
         }
         else
@@ -43,8 +58,10 @@ class CommandController extends Telegram.TelegramBaseController {
         return {
             'detailsCommand': 'detailsHandler',
             'criteriaCommand': 'criteriaHandler',
+            'scheduleCommand': 'scheduleHandler',
             'editDetailsCommand': 'editDetailsHandler',
-            'editCriteriaCommand': 'editCriteriaHandler'            
+            'editCriteriaCommand': 'editCriteriaHandler',
+            'editScheduleCommand': 'editScheduleHandler'
         };
     }
 }
