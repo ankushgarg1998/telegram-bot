@@ -18,4 +18,9 @@ tg.router.when(new Telegram.TextCommand('/details', 'detailsCommand'), commandCo
     .when(new Telegram.TextCommand('/editCriteria', 'editCriteriaCommand'), commandController)
     .when(new Telegram.TextCommand('/editSchedule', 'editScheduleCommand'), commandController)
     .when(new Telegram.TextCommand('/editLocation', 'editLocationCommand'), commandController)
+    .when(new Telegram.TextCommand('/apply', 'applyCommand'), commandController)
+    .when(new Telegram.TextCommand('/allApplicants', 'allApplicantsCommand'), commandController)
+    .when(new Telegram.TextCommand('/announcement', 'announcementCommand'), commandController)
+    .when(new Telegram.TextCommand('/allAnnouncements', 'allAnnouncementsCommand'), commandController)
+    .when(new Telegram.TextCommand('/test', 'testCommand'), commandController)
     .otherwise(new OtherwiseController());

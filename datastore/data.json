@@ -1,4 +1,5 @@
 {
+    "hackathonName": "Hack 101",
     "details": "Details",
     "criteria": "J C",
     "schedule": "Ye schedule bawa",
@@ -6,5 +7,12 @@
         "latitude": "28.621175",
         "longitude": "77.092686"
     },
-    "masterUserName": "ankushgarg1998"
+    "applicants": [
+        
+    ],
+    "announcements": [
+        "first one"
+    ],
+    "masterUserName": "ankushgarg1998",
+    "masterChatID": 313164959
 }

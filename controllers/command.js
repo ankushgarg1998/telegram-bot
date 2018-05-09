@@ -28,7 +28,7 @@ class CommandController extends Telegram.TelegramBaseController {
                 .then($ => {
                     dataObj.details = $.message.text;
                     $.sendMessage(`Details Updated! New Details are : \n\n${dataObj.details}`);
-                })
+                });
         } else
             $.sendMessage('You are not authorized for this command!');
     }
@@ -40,7 +40,7 @@ class CommandController extends Telegram.TelegramBaseController {
                 .then($ => {
                     dataObj.criteria = $.message.text;
                     $.sendMessage(`Judging Criteria Updated! New Judging Criteria is : \n\n${dataObj.criteria}`);
-                })
+                });
         } else
             $.sendMessage('You are not authorized for this command!');
     }
@@ -52,7 +52,7 @@ class CommandController extends Telegram.TelegramBaseController {
                 .then($ => {
                     dataObj.schedule = $.message.text;
                     $.sendMessage(`Schedule Updated! New Schedule is : \n\n${dataObj.schedule}`);
-                })
+                });
         }
         else
             $.sendMessage('You are not authorized for this command!');
@@ -72,9 +72,59 @@ class CommandController extends Telegram.TelegramBaseController {
                             $.sendMessage(`Location Updated! New Location is : `);
                             $.sendLocation(dataObj.location.latitude, dataObj.location.longitude);
                         })
-                })
+                });
         } else
             $.sendMessage('You are not authorized for this command!');
+    }
+
+    applyHandler($) {
+        $.sendMessage(`You are applying for ${dataObj.hackathonName}.\n\nPlease enter you name :`);
+        $.waitForRequest
+            .then($ => {
+                let newApplicant = {"name": $.message.text, "chatID": $.message.chat.id};
+                dataObj.applicants.push(newApplicant);
+                $.sendMessage(`You have successfully applied!`);
+                $.sendMessage(`New Application: ${newApplicant.name}.`, {'chat_id': dataObj.masterChatID});
+            });
+    }
+
+    allApplicantsHandler($) {
+        if ($.message.from.username == dataObj.masterUserName) {
+            let applicantsList = 'List of Applicants\n\n';
+            dataObj.applicants.forEach((applicant, i) => {
+                applicantsList += `${i+1}. ${applicant.name}\n`;
+            })
+            $.sendMessage(applicantsList);
+        }
+        else
+            $.sendMessage('You are not authorized for this command!');
+    }
+
+    testHandler($) {
+        console.log($.message.chat.id);
+    }
+
+    announcementHandler($) {
+        if ($.message.from.username == dataObj.masterUserName) {
+            $.sendMessage("This announcement will be sent to all the applicants :\n\nEnter the announcement :")
+            $.waitForRequest
+                .then($ => {
+                    dataObj.announcements.push($.message.text);
+                    dataObj.applicants.forEach(applicant => {
+                        $.sendMessage(`ANNOUNCEMENT\n\n${$.message.text}`, {'chat_id': applicant.chatID});
+                    });
+                    $.sendMessage(`${$.message.text}\n\nThis announcement has been sent to all the applicants.`);
+                });
+        }
+        else
+            $.sendMessage('You are not authorized for this command!');
+    }
+
+    allAnnouncementsHandler($) {
+        $.sendMessage(`All announcements\n\n`);
+        dataObj.announcements.forEach(announcement => {
+            $.sendMessage(`ANNOUNCEMENT\n\n${announcement}`);
+        })
     }
 
     get routes() {
@@ -86,7 +136,12 @@ class CommandController extends Telegram.TelegramBaseController {
             'editDetailsCommand': 'editDetailsHandler',
             'editCriteriaCommand': 'editCriteriaHandler',
             'editScheduleCommand': 'editScheduleHandler',
-            'editLocationCommand': 'editLocationHandler'
+            'editLocationCommand': 'editLocationHandler',
+            'applyCommand': 'applyHandler',
+            'allApplicantsCommand': 'allApplicantsHandler',
+            'announcementCommand': 'announcementHandler',
+            'allAnnouncementsCommand': 'allAnnouncementsHandler',
+            'testCommand': 'testHandler'
         };
     }
 }
