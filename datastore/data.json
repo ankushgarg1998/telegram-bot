@@ -2,5 +2,9 @@
     "details": "Details",
     "criteria": "J C",
     "schedule": "Ye schedule bawa",
+    "location": {
+        "latitude": "28.621175",
+        "longitude": "77.092686"
+    },
     "masterUserName": "ankushgarg1998"
 }

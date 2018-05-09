@@ -11,9 +11,11 @@ const OtherwiseController = require('./controllers/otherwise');
 const commandController = new CommandController();
 
 tg.router.when(new Telegram.TextCommand('/details', 'detailsCommand'), commandController)
-    .when(new Telegram.TextCommand('/judgingCriteria', 'criteriaCommand'), commandController)
+    .when(new Telegram.TextCommand('/judgingcriteria', 'criteriaCommand'), commandController)
     .when(new Telegram.TextCommand('/schedule', 'scheduleCommand'), commandController)
+    .when(new Telegram.TextCommand('/location', 'locationCommand'), commandController)
     .when(new Telegram.TextCommand('/editDetails', 'editDetailsCommand'), commandController)
     .when(new Telegram.TextCommand('/editCriteria', 'editCriteriaCommand'), commandController)
     .when(new Telegram.TextCommand('/editSchedule', 'editScheduleCommand'), commandController)
+    .when(new Telegram.TextCommand('/editLocation', 'editLocationCommand'), commandController)
     .otherwise(new OtherwiseController());
