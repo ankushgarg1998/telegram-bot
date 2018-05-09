@@ -5,11 +5,13 @@ const tg = new Telegram.Telegram('471463004:AAHAOrlRbzezb2-ikqjqoYKj5GUEakD8Sx4'
     workers: 1
 });
 
-const TodoController = require('./controllers/todo');
+const CommandController = require('./controllers/command');
 const OtherwiseController = require('./controllers/otherwise');
 
-const todoController = new TodoController();
+const commandController = new CommandController();
 
-tg.router.when(new Telegram.TextCommand('/add', 'addCommand'), todoController)
-    .when(new Telegram.TextCommand('/get', 'getCommand'), todoController)
+tg.router.when(new Telegram.TextCommand('/details', 'detailsCommand'), commandController)
+    .when(new Telegram.TextCommand('/judgingCriteria', 'criteriaCommand'), commandController)
+    .when(new Telegram.TextCommand('/editDetails', 'editDetailsCommand'), commandController)
+    .when(new Telegram.TextCommand('/editCriteria', 'editCriteriaCommand'), commandController)
     .otherwise(new OtherwiseController());
