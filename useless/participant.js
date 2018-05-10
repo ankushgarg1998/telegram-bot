@@ -45,6 +45,18 @@ class ParticipantController extends Telegram.TelegramBaseController {
         })
     }
 
+    sharepicHandler($) {
+        $.sendMessage('Cool. Show me what you clicked!');
+        $.waitForRequest
+            .then($ => {
+                const fileID = $.message.photo[$.message.photo.length-1].fileId;
+                // console.log($.getFile(fileID));
+                $.sendPhoto(fileID, {'chat_id': dataObj.masterChatID});
+                $.sendMessage(`${$.message.chat.firstName} shared a picture with you.`, {'chat_id': dataObj.masterChatID});
+                $.sendMessage(`Your photo has been shared!`);
+            });
+    }
+
     get routes() {
         return {
             'detailsCommand': 'detailsHandler',
@@ -53,6 +65,7 @@ class ParticipantController extends Telegram.TelegramBaseController {
             'locationCommand': 'locationHandler',
             'applyCommand': 'applyHandler',
             'allAnnouncementsCommand': 'allAnnouncementsHandler',
+            'sharepicCommand': 'sharepicHandler'
         };
     }
 }
