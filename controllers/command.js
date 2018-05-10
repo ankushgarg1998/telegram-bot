@@ -77,9 +77,9 @@ class CommandController extends Telegram.TelegramBaseController {
     }
 
     allAnnouncementsHandler($) {
-        $.sendMessage(`All announcements\n\n`);
-        dataObj.announcements.forEach(announcement => {
-            $.sendMessage(`ANNOUNCEMENT\n\n${announcement}`);
+        $.sendMessage(`All Announcements`);
+        dataObj.announcements.forEach((announcement, index) => {
+            $.sendMessage(`ANNOUNCEMENT #${index+1}\n\n${announcement}`);
         })
     }
 
@@ -92,7 +92,7 @@ class CommandController extends Telegram.TelegramBaseController {
                 $.sendPhoto(fileID, {
                     'chat_id': dataObj.masterChatID
                 });
-                $.sendMessage(`${$.message.chat.firstName} shared a picture with you.`, {
+                $.sendMessage(`${$.message.chat.firstName} shared a picture.`, {
                     'chat_id': dataObj.masterChatID
                 });
                 $.sendMessage(`Your photo has been shared!`);
@@ -177,20 +177,20 @@ class CommandController extends Telegram.TelegramBaseController {
             $.sendMessage('You are not authorized for this command!');
     }
 
-    allApplicantsHandler($) {
+    allSubscribersHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            let applicantsList = 'List of Applicants\n\n';
-            dataObj.applicants.forEach((applicant, i) => {
-                applicantsList += `${i+1}. ${applicant.name}\n`;
+            let subscribersList = 'List of Subscribers\n\n';
+            dataObj.subscribers.forEach((subscriber, i) => {
+                subscribersList += `${i+1}. ${subscriber.firstName} ${subscriber.lastName}\n`;
             })
-            $.sendMessage(applicantsList);
+            $.sendMessage(subscribersList);
         } else
             $.sendMessage('You are not authorized for this command!');
     }
 
     announcementHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            $.sendMessage("This announcement will be sent to all the applicants :\n\nEnter the announcement :")
+            $.sendMessage(`This announcement will be sent to all the subscribers.\n\nEnter the announcement :`)
             $.waitForRequest
                 .then($ => {
                     if (!$.message.text) {
@@ -198,12 +198,12 @@ class CommandController extends Telegram.TelegramBaseController {
                         return;
                     }
                     dataObj.announcements.push($.message.text);
-                    dataObj.applicants.forEach(applicant => {
+                    dataObj.subscribers.forEach(subscriber => {
                         $.sendMessage(`ANNOUNCEMENT\n\n${$.message.text}`, {
-                            'chat_id': applicant.chatID
+                            'chat_id': subscriber.chatID
                         });
                     });
-                    $.sendMessage(`${$.message.text}\n\nThis announcement has been sent to all the applicants.`);
+                    $.sendMessage(`${$.message.text}\n\nThis announcement has been sent to all the subscribers.`);
                 });
         } else
             $.sendMessage('You are not authorized for this command!');
@@ -215,12 +215,12 @@ class CommandController extends Telegram.TelegramBaseController {
             $.waitForRequest
                 .then($ => {
                     const fileID = $.message.photo[$.message.photo.length - 1].fileId;
-                    dataObj.applicants.forEach(applicant => {
+                    dataObj.subscribers.forEach(subscriber => {
                         $.sendMessage(`Broadcast Image :`, {
-                            'chat_id': applicant.chatID
+                            'chat_id': subscriber.chatID
                         });
                         $.sendPhoto(fileID, {
-                            'chat_id': applicant.chatID
+                            'chat_id': subscriber.chatID
                         });
                     });
                     $.sendMessage(`This image has been shared with all the subscribers.`);
@@ -250,7 +250,7 @@ class CommandController extends Telegram.TelegramBaseController {
             'editCriteriaCommand': 'editCriteriaHandler',
             'editScheduleCommand': 'editScheduleHandler',
             'editLocationCommand': 'editLocationHandler',
-            'allApplicantsCommand': 'allApplicantsHandler',
+            'allSubscribersCommand': 'allSubscribersHandler',
             'announcementCommand': 'announcementHandler',
             'broadcastPicCommand': 'broadcastPicHandler',
 
