@@ -157,6 +157,10 @@ class CommandController extends Telegram.TelegramBaseController {
             $.sendMessage("This announcement will be sent to all the applicants :\n\nEnter the announcement :")
             $.waitForRequest
                 .then($ => {
+                    if(!$.message.text) {
+                        $.sendMessage(`Can't seem to understand this format. Please try again with a plain text announcement!`);
+                        return;
+                    }
                     dataObj.announcements.push($.message.text);
                     dataObj.applicants.forEach(applicant => {
                         $.sendMessage(`ANNOUNCEMENT\n\n${$.message.text}`, {
