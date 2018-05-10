@@ -9,6 +9,7 @@ class CommandController extends Telegram.TelegramBaseController {
     // PARTICIPANTS' FEATURES-----------------------------------------------
     detailsHandler($) {
         $.sendMessage(dataObj.details);
+        $.sendPhoto(dataObj.poster);
     }
 
     criteriaHandler($) {
@@ -64,6 +65,27 @@ class CommandController extends Telegram.TelegramBaseController {
 
 
     // ORGANISERS' FEATURES-------------------------------------------------
+
+    newPosterHandler($) {
+        if ($.message.from.username == dataObj.masterUserName) {
+            $.sendMessage('Send me the image of the Poster.')
+            $.waitForRequest
+                .then($ => {
+                    const fileID = $.message.photo[$.message.photo.length - 1].fileId;
+                    dataObj.poster = fileID;
+                    $.sendMessage(`New Poster is set. This will be shared with the participants along with the details.`);
+                });
+        } else
+            $.sendMessage('You are not authorized for this command!');
+    }
+
+    removePosterHandler($) {
+        if ($.message.from.username == dataObj.masterUserName) {
+            dataObj.poster = '';
+            $.sendMessage('The Poster has been removed.');
+        } else
+            $.sendMessage('You are not authorized for this command!');
+    }
 
     editDetailsHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
@@ -150,7 +172,19 @@ class CommandController extends Telegram.TelegramBaseController {
 
     // TESTING FEATURES-----------------------------------------------------
     testHandler($) {
-        
+        $.sendMessage('Cool. Show me what you clicked!');
+        $.waitForRequest
+            .then($ => {
+                const fileID = $.message.photo[$.message.photo.length - 1].fileId;
+                console.log(fileID);
+                $.sendPhoto(fileID, {
+                    'chat_id': dataObj.masterChatID
+                });
+                $.sendMessage(`${$.message.chat.firstName} shared a picture with you.`, {
+                    'chat_id': dataObj.masterChatID
+                });
+                $.sendMessage(`Your photo has been shared!`);
+            });
     }
 
     // ROUTES---------------------------------------------------------------
@@ -170,6 +204,8 @@ class CommandController extends Telegram.TelegramBaseController {
             'editLocationCommand': 'editLocationHandler',
             'allApplicantsCommand': 'allApplicantsHandler',
             'announcementCommand': 'announcementHandler',
+            'newPosterCommand': 'newPosterHandler',
+            'removePosterCommand': 'removePosterHandler',
 
             'testCommand': 'testHandler'
         };

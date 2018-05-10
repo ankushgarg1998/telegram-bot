@@ -29,6 +29,8 @@ tg.router
     .when(new Telegram.TextCommand('/editLocation', 'editLocationCommand'), commandController)
     .when(new Telegram.TextCommand('/allApplicants', 'allApplicantsCommand'), commandController)
     .when(new Telegram.TextCommand('/announcement', 'announcementCommand'), commandController)
+    .when(new Telegram.TextCommand('/newPoster', 'newPosterCommand'), commandController)
+    .when(new Telegram.TextCommand('/removePoster', 'removePosterCommand'), commandController)
     
     .when(new Telegram.TextCommand('/test', 'testCommand'), commandController)
     .otherwise(new OtherwiseController());
