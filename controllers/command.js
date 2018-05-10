@@ -6,6 +6,11 @@ var dataObj = JSON.parse(fs.readFileSync('./datastore/data.json', 'utf8'));
 
 class CommandController extends Telegram.TelegramBaseController {
 
+    // FUNCTIONS------------------------------------------------------------
+    findInSubscribers(chatID) {
+        return dataObj.subscribers.find(subscriber => subscriber.chatID == chatID);
+    }
+
     // PARTICIPANTS' FEATURES-----------------------------------------------
     detailsHandler($) {
         $.sendMessage(dataObj.details);
@@ -24,20 +29,51 @@ class CommandController extends Telegram.TelegramBaseController {
         $.sendLocation(dataObj.location.latitude, dataObj.location.longitude);
     }
 
-    applyHandler($) {
-        $.sendMessage(`You are applying for ${dataObj.hackathonName}.\n\nPlease enter you name :`);
-        $.waitForRequest
-            .then($ => {
-                let newApplicant = {
-                    "name": $.message.text,
-                    "chatID": $.message.chat.id
-                };
-                dataObj.applicants.push(newApplicant);
-                $.sendMessage(`You have successfully applied!`);
-                $.sendMessage(`New Application: ${newApplicant.name}.`, {
-                    'chat_id': dataObj.masterChatID
-                });
+    // applyHandler($) {
+    //     $.sendMessage(`You are now subscribed to the updates of ${dataObj.hackathonName}. You can unsubscribe anytime you want.\n\nHappy Hacking!`);
+    //     $.waitForRequest
+    //         .then($ => {
+    //             let newApplicant = {
+    //                 "name": $.message.text,
+    //                 "chatID": $.message.chat.id
+    //             };
+    //             dataObj.applicants.push(newApplicant);
+    //             $.sendMessage(`You have successfully applied!`);
+    //             $.sendMessage(`New Application: ${newApplicant.name}.`, {
+    //                 'chat_id': dataObj.masterChatID
+    //             });
+    //         });
+    // }
+
+    subscribeHandler($) {
+        if (this.findInSubscribers($.message.chat.id))
+            $.sendMessage(`You are already subscribed to ${dataObj.hackathonName}`);
+        else {
+            let newSubscriber = {
+                "firstName": $.message.from.firstName,
+                "lastName": $.message.from.lastName,
+                "username": $.message.from.username,
+                "chatID": $.message.chat.id
+            };
+            dataObj.subscribers.push(newSubscriber);
+            $.sendMessage(`You are now subscribed to the updates of ${dataObj.hackathonName}. You can unsubscribe anytime you want.\n\nHappy Hacking!`);
+            $.sendMessage(`New Subscriber: ${newSubscriber.firstName} ${newSubscriber.lastName}.`, {
+                'chat_id': dataObj.masterChatID
             });
+        }
+    }
+
+    unsubscribeHandler($) {
+        const unsubscriber = this.findInSubscribers($.message.chat.id);
+        if (unsubscriber) {
+            dataObj.subscribers.pop(unsubscriber);
+            $.sendMessage(`You\'ve been unsubscribed. You\'ll no longer be receiving updates from ${dataObj.hackathonName}`);
+            $.sendMessage(`${unsubscriber.firstName} ${unsubscriber.lastName} Unsubscribed!`, {
+                'chat_id': dataObj.masterChatID
+            });
+        } else
+            $.sendMessage(`You are not subscribed to ${dataObj.hackathonName}.`);
+
     }
 
     allAnnouncementsHandler($) {
@@ -194,22 +230,7 @@ class CommandController extends Telegram.TelegramBaseController {
     }
 
     // TESTING FEATURES-----------------------------------------------------
-    testHandler($) {
-        $.sendMessage('Cool. Show me what you have!');
-        $.waitForRequest
-            .then($ => {
-                console.log(message);
-                const fileID = $.message.photo[$.message.photo.length - 1].fileId;
-                console.log(fileID);
-                $.sendPhoto(fileID, {
-                    'chat_id': dataObj.masterChatID
-                });
-                $.sendMessage(`${$.message.chat.firstName} shared a picture with you.`, {
-                    'chat_id': dataObj.masterChatID
-                });
-                $.sendMessage(`Your photo has been shared!`);
-            });
-    }
+    testHandler($) {}
 
     // ROUTES---------------------------------------------------------------
     get routes() {
@@ -218,7 +239,8 @@ class CommandController extends Telegram.TelegramBaseController {
             'criteriaCommand': 'criteriaHandler',
             'scheduleCommand': 'scheduleHandler',
             'locationCommand': 'locationHandler',
-            'applyCommand': 'applyHandler',
+            'subscribeCommand': 'subscribeHandler',
+            'unsubscribeCommand': 'unsubscribeHandler',
             'allAnnouncementsCommand': 'allAnnouncementsHandler',
             'sharepicCommand': 'sharepicHandler',
 

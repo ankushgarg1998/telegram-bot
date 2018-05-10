@@ -62,3 +62,8 @@ $.runInlineMenu({
         }
     ]
 })
+
+// FUNCTIONS------------------------------------------------------------
+findInSubscribers(chatID) {
+    return dataObj.subscribers.find(subscriber => subscriber.chatID == chatID);
+}

@@ -19,7 +19,8 @@ tg.router
     .when(new Telegram.TextCommand('/judgingcriteria', 'criteriaCommand'), commandController)
     .when(new Telegram.TextCommand('/schedule', 'scheduleCommand'), commandController)
     .when(new Telegram.TextCommand('/location', 'locationCommand'), commandController)
-    .when(new Telegram.TextCommand('/apply', 'applyCommand'), commandController)
+    .when(new Telegram.TextCommand('/subscribe', 'subscribeCommand'), commandController)
+    .when(new Telegram.TextCommand('/unsubscribe', 'unsubscribeCommand'), commandController)
     .when(new Telegram.TextCommand('/allAnnouncements', 'allAnnouncementsCommand'), commandController)
     .when(new Telegram.TextCommand('/sharepic', 'sharepicCommand'), commandController)
 
