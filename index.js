@@ -21,7 +21,7 @@ tg.router
     .when(new Telegram.TextCommand('/location', 'locationCommand'), commandController)
     .when(new Telegram.TextCommand('/subscribe', 'subscribeCommand'), commandController)
     .when(new Telegram.TextCommand('/unsubscribe', 'unsubscribeCommand'), commandController)
-    .when(new Telegram.TextCommand('/allAnnouncements', 'allAnnouncementsCommand'), commandController)
+    .when(new Telegram.TextCommand('/allannouncements', 'allAnnouncementsCommand'), commandController)
     .when(new Telegram.TextCommand('/sharepic', 'sharepicCommand'), commandController)
 
     .when(new Telegram.TextCommand('/newPoster', 'newPosterCommand'), commandController)
@@ -34,5 +34,7 @@ tg.router
     .when(new Telegram.TextCommand('/announcement', 'announcementCommand'), commandController)
     .when(new Telegram.TextCommand('/broadcastPic', 'broadcastPicCommand'), commandController)
     
+    .when(new Telegram.TextCommand('/start', 'helpCommand'), commandController)
+    .when(new Telegram.TextCommand('/help', 'helpCommand'), commandController)
     .when(new Telegram.TextCommand('/test', 'testCommand'), commandController)
     .otherwise(new OtherwiseController());

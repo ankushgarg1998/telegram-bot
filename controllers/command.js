@@ -232,6 +232,12 @@ class CommandController extends Telegram.TelegramBaseController {
     // TESTING FEATURES-----------------------------------------------------
     testHandler($) {}
 
+    helpHandler($) {
+        $.sendMessage(dataObj.help, {
+            "parse_mode": "Markdown"
+        });
+    }
+
     // ROUTES---------------------------------------------------------------
     get routes() {
         return {
@@ -254,7 +260,8 @@ class CommandController extends Telegram.TelegramBaseController {
             'announcementCommand': 'announcementHandler',
             'broadcastPicCommand': 'broadcastPicHandler',
 
-            'testCommand': 'testHandler'
+            'testCommand': 'testHandler',
+            'helpCommand': 'helpHandler'
         };
     }
 }
