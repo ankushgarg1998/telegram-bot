@@ -1,7 +1,8 @@
 'use strict';
 
 const Telegram = require('telegram-node-bot');
-const tg = new Telegram.Telegram('471463004:AAHAOrlRbzezb2-ikqjqoYKj5GUEakD8Sx4', {
+const keys = require('./config/keys')
+const tg = new Telegram.Telegram(keys.token, {
     workers: 1
 });
 
