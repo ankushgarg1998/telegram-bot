@@ -77,10 +77,14 @@ class CommandController extends Telegram.TelegramBaseController {
     }
 
     allAnnouncementsHandler($) {
-        $.sendMessage(`ALL ANNOUNCEMENTS`);
-        dataObj.announcements.forEach((announcement, index) => {
-            $.sendMessage(`ANNOUNCEMENT #${index+1}\n\n${announcement}`);
-        })
+        if (dataObj.announcements.length == 0)
+            $.sendMessage(`No announcements have been made yet. Make sure you're subscribed(/subscribe) to receive the latest updates`);
+        else {
+            $.sendMessage(`ALL ANNOUNCEMENTS`);
+            dataObj.announcements.forEach((announcement, index) => {
+                $.sendMessage(`ANNOUNCEMENT #${index+1}\n\n${announcement}`);
+            })
+        }
     }
 
     sharepicHandler($) {
@@ -279,10 +283,14 @@ class CommandController extends Telegram.TelegramBaseController {
 
     allFeedbacksHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            $.sendMessage(`ALL FEEDBACKS`);
-            dataObj.feedbacks.forEach((feedback, index) => {
-                $.sendMessage(`FEEDBACK #${index+1}\nfrom @${feedback.username}\n\n${feedback.feedback}`);
-            })
+            if (dataObj.feedbacks.length == 0)
+                $.sendMessage(`No Feedbacks received yet. You can make an /announcement and ask your subscribers for feedbacks`);
+            else {
+                $.sendMessage(`ALL FEEDBACKS`);
+                dataObj.feedbacks.forEach((feedback, index) => {
+                    $.sendMessage(`FEEDBACK #${index+1}\nfrom @${feedback.username}\n\n${feedback.feedback}`);
+                })
+            }
         } else
             $.sendMessage('You are not authorized for this command!');
     }
