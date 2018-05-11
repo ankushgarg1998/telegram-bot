@@ -23,6 +23,7 @@ tg.router
     .when(new Telegram.TextCommand('/unsubscribe', 'unsubscribeCommand'), commandController)
     .when(new Telegram.TextCommand('/allannouncements', 'allAnnouncementsCommand'), commandController)
     .when(new Telegram.TextCommand('/sharepic', 'sharepicCommand'), commandController)
+    .when(new Telegram.TextCommand('/feedback', 'feedbackCommand'), commandController)
 
     .when(new Telegram.TextCommand('/newPoster', 'newPosterCommand'), commandController)
     .when(new Telegram.TextCommand('/removePoster', 'removePosterCommand'), commandController)
@@ -33,6 +34,7 @@ tg.router
     .when(new Telegram.TextCommand('/allSubscribers', 'allSubscribersCommand'), commandController)
     .when(new Telegram.TextCommand('/announcement', 'announcementCommand'), commandController)
     .when(new Telegram.TextCommand('/broadcastPic', 'broadcastPicCommand'), commandController)
+    .when(new Telegram.TextCommand('/allFeedbacks', 'allFeedbacksCommand'), commandController)
     
     .when(new Telegram.TextCommand('/start', 'helpCommand'), commandController)
     .when(new Telegram.TextCommand('/help', 'helpCommand'), commandController)

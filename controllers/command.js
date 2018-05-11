@@ -77,7 +77,7 @@ class CommandController extends Telegram.TelegramBaseController {
     }
 
     allAnnouncementsHandler($) {
-        $.sendMessage(`All Announcements`);
+        $.sendMessage(`ALL ANNOUNCEMENTS`);
         dataObj.announcements.forEach((announcement, index) => {
             $.sendMessage(`ANNOUNCEMENT #${index+1}\n\n${announcement}`);
         })
@@ -99,6 +99,28 @@ class CommandController extends Telegram.TelegramBaseController {
             });
     }
 
+    feedbackHandler($) {
+        $.sendMessage(`We'd love to hear from you. Even if it is critisicm. :D\nPlease enter your feedback.`);
+        $.waitForRequest
+            .then($ => {
+                if (!$.message.text) {
+                    $.sendMessage(`Can't seem to understand this format. Please try again with a plain text announcement!`);
+                    return;
+                }
+                const newFeedback = {
+                    "firstName": $.message.from.firstName,
+                    "lastName": $.message.from.lastName,
+                    "username": $.message.from.username,
+                    "chatID": $.message.chat.id,
+                    "feedback": $.message.text
+                }
+                dataObj.feedbacks.push(newFeedback);
+                $.sendMessage(`Your feedback has been sent to the organisers. Thanks for your time!`);
+                $.sendMessage(`New Feedback from @${newFeedback.username}.\n\n${newFeedback.feedback}`, {
+                    'chat_id': dataObj.masterChatID
+                });
+            });
+    }
 
     // ORGANISERS' FEATURES-------------------------------------------------
 
@@ -229,6 +251,16 @@ class CommandController extends Telegram.TelegramBaseController {
             $.sendMessage('You are not authorized for this command!');
     }
 
+    allFeedbacksHandler($) {
+        if ($.message.from.username == dataObj.masterUserName) {
+            $.sendMessage(`ALL FEEDBACKS`);
+            dataObj.feedbacks.forEach((feedback, index) => {
+                $.sendMessage(`FEEDBACK #${index+1}\nfrom @${feedback.username}\n\n${feedback.feedback}`);
+            })
+        } else
+            $.sendMessage('You are not authorized for this command!');
+    }
+
     // TESTING FEATURES-----------------------------------------------------
     testHandler($) {}
 
@@ -249,6 +281,7 @@ class CommandController extends Telegram.TelegramBaseController {
             'unsubscribeCommand': 'unsubscribeHandler',
             'allAnnouncementsCommand': 'allAnnouncementsHandler',
             'sharepicCommand': 'sharepicHandler',
+            'feedbackCommand': 'feedbackHandler',
 
             'newPosterCommand': 'newPosterHandler',
             'removePosterCommand': 'removePosterHandler',
@@ -259,6 +292,7 @@ class CommandController extends Telegram.TelegramBaseController {
             'allSubscribersCommand': 'allSubscribersHandler',
             'announcementCommand': 'announcementHandler',
             'broadcastPicCommand': 'broadcastPicHandler',
+            'allFeedbacksCommand': 'allFeedbacksHandler',
 
             'testCommand': 'testHandler',
             'helpCommand': 'helpHandler'
