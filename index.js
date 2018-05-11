@@ -15,6 +15,9 @@ const commandController = new CommandController();
 // const organiserController = new OrganiserController();
 
 tg.router
+    .when(new Telegram.TextCommand('/start', 'helpCommand'), commandController)
+    .when(new Telegram.TextCommand('/help', 'helpCommand'), commandController)
+    
     .when(new Telegram.TextCommand('/details', 'detailsCommand'), commandController)
     .when(new Telegram.TextCommand('/judgingcriteria', 'criteriaCommand'), commandController)
     .when(new Telegram.TextCommand('/schedule', 'scheduleCommand'), commandController)
@@ -36,7 +39,5 @@ tg.router
     .when(new Telegram.TextCommand('/broadcastPic', 'broadcastPicCommand'), commandController)
     .when(new Telegram.TextCommand('/allFeedbacks', 'allFeedbacksCommand'), commandController)
     
-    .when(new Telegram.TextCommand('/start', 'helpCommand'), commandController)
-    .when(new Telegram.TextCommand('/help', 'helpCommand'), commandController)
-    .when(new Telegram.TextCommand('/test', 'testCommand'), commandController)
+    // .when(new Telegram.TextCommand('/test', 'testCommand'), commandController)
     .otherwise(new OtherwiseController());

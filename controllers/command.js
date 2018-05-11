@@ -4,6 +4,10 @@ const Telegram = require('telegram-node-bot');
 var fs = require('fs');
 var dataObj = JSON.parse(fs.readFileSync('./datastore/data.json', 'utf8'));
 
+var markD = {
+    "parse_mode": "Markdown"
+};
+
 class CommandController extends Telegram.TelegramBaseController {
 
     // FUNCTIONS------------------------------------------------------------
@@ -12,17 +16,22 @@ class CommandController extends Telegram.TelegramBaseController {
     }
 
     // PARTICIPANTS' FEATURES-----------------------------------------------
+    
+    helpHandler($) {
+        $.sendMessage(dataObj.help, markD);
+    }
+
     detailsHandler($) {
-        $.sendMessage(dataObj.details);
+        $.sendMessage(dataObj.details, markD);
         $.sendPhoto(dataObj.poster);
     }
 
     criteriaHandler($) {
-        $.sendMessage(dataObj.criteria);
+        $.sendMessage(dataObj.criteria, markD);
     }
 
     scheduleHandler($) {
-        $.sendMessage(dataObj.schedule);
+        $.sendMessage(dataObj.schedule, markD);
     }
 
     locationHandler($) {
@@ -47,7 +56,7 @@ class CommandController extends Telegram.TelegramBaseController {
 
     subscribeHandler($) {
         if (this.findInSubscribers($.message.chat.id))
-            $.sendMessage(`You are already subscribed to ${dataObj.hackathonName}`);
+            $.sendMessage(`You are already subscribed to *${dataObj.hackathonName}*`, markD);
         else {
             let newSubscriber = {
                 "firstName": $.message.from.firstName,
@@ -56,9 +65,10 @@ class CommandController extends Telegram.TelegramBaseController {
                 "chatID": $.message.chat.id
             };
             dataObj.subscribers.push(newSubscriber);
-            $.sendMessage(`You are now subscribed to the updates of ${dataObj.hackathonName}. You can unsubscribe anytime you want.\n\nHappy Hacking!`);
-            $.sendMessage(`New Subscriber: ${newSubscriber.firstName} ${newSubscriber.lastName}.`, {
-                'chat_id': dataObj.masterChatID
+            $.sendMessage(`You are now subscribed to the updates of *${dataObj.hackathonName}*. You can /unsubscribe anytime you want.\n\nHappy Hacking!`, markD);
+            $.sendMessage(`*New Subscriber*: ${newSubscriber.firstName} ${newSubscriber.lastName}.`, {
+                'chat_id': dataObj.masterChatID,
+                'parse_mode': 'Markdown'
             });
         }
     }
@@ -67,22 +77,23 @@ class CommandController extends Telegram.TelegramBaseController {
         const unsubscriber = this.findInSubscribers($.message.chat.id);
         if (unsubscriber) {
             dataObj.subscribers.pop(unsubscriber);
-            $.sendMessage(`You\'ve been unsubscribed. You\'ll no longer be receiving updates from ${dataObj.hackathonName}`);
-            $.sendMessage(`${unsubscriber.firstName} ${unsubscriber.lastName} Unsubscribed!`, {
-                'chat_id': dataObj.masterChatID
+            $.sendMessage(`You\'ve been *unsubscribed*. You\'ll no longer be receiving updates from *${dataObj.hackathonName}*`, markD);
+            $.sendMessage(`${unsubscriber.firstName} ${unsubscriber.lastName} *Unsubscribed!*`, {
+                'chat_id': dataObj.masterChatID,
+                'parse_mode': 'Markdown'
             });
         } else
-            $.sendMessage(`You are not subscribed to ${dataObj.hackathonName}.`);
+            $.sendMessage(`You are not subscribed to *${dataObj.hackathonName}*.`, markD);
 
     }
 
     allAnnouncementsHandler($) {
         if (dataObj.announcements.length == 0)
-            $.sendMessage(`No announcements have been made yet. Make sure you're subscribed(/subscribe) to receive the latest updates`);
+            $.sendMessage(`No announcements have been made yet. Make sure you're subscribed(/subscribe) to receive the latest updates.`);
         else {
-            $.sendMessage(`ALL ANNOUNCEMENTS`);
+            $.sendMessage(`*ALL ANNOUNCEMENTS*`, markD);
             dataObj.announcements.forEach((announcement, index) => {
-                $.sendMessage(`ANNOUNCEMENT #${index+1}\n\n${announcement}`);
+                $.sendMessage(`*ANNOUNCEMENT #${index+1}*\n\n${announcement}`, markD);
             })
         }
     }
@@ -94,17 +105,20 @@ class CommandController extends Telegram.TelegramBaseController {
                 const fileID = $.message.photo[$.message.photo.length - 1].fileId;
                 // console.log($.getFile(fileID));
                 $.sendPhoto(fileID, {
-                    'chat_id': dataObj.masterChatID
+                    'chat_id': dataObj.masterChatID,
+                    'parse_mode': 'Markdown',
+                    'caption': `*${$.message.chat.firstName}* shared a picture.`
                 });
-                $.sendMessage(`${$.message.chat.firstName} shared a picture.`, {
-                    'chat_id': dataObj.masterChatID
-                });
+                // $.sendMessage(`*${$.message.chat.firstName}* shared a picture.`, {
+                //     'chat_id': dataObj.masterChatID,
+                //     'parse_mode': 'Markdown'
+                // });
                 $.sendMessage(`Your photo has been shared!`);
             });
     }
 
     feedbackHandler($) {
-        $.sendMessage(`We'd love to hear from you. Even if it is critisicm. :D\nPlease enter your feedback.`);
+        $.sendMessage(`We'd love to hear from you. Even if it is critisicm. :D\n\nPlease enter your feedback.`);
         // var options = {
         //     reply_markup: JSON.stringify({
         //       inline_keyboard: [
@@ -131,7 +145,7 @@ class CommandController extends Telegram.TelegramBaseController {
         $.waitForRequest
             .then($ => {
                 if (!$.message.text) {
-                    $.sendMessage(`Can't seem to understand this format. Please try again with a plain text announcement!`);
+                    $.sendMessage(`Can't seem to understand this format. Please try again with a plain text /feedback`);
                     return;
                 } else if ($.message.text == 'Cancel') {
                     $.sendMessage(`Alright!`);
@@ -161,7 +175,7 @@ class CommandController extends Telegram.TelegramBaseController {
                 .then($ => {
                     const fileID = $.message.photo[$.message.photo.length - 1].fileId;
                     dataObj.poster = fileID;
-                    $.sendMessage(`New Poster is set. This will be shared with the participants along with the details.`);
+                    $.sendMessage(`New Poster is set.`);
                 });
         } else
             $.sendMessage('You are not authorized for this command!');
@@ -177,11 +191,11 @@ class CommandController extends Telegram.TelegramBaseController {
 
     editDetailsHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            $.sendMessage('Old Details : \n\n' + dataObj.details + '\n\nEnter the New Details :');
+            $.sendMessage('*Old Details* : \n\n' + dataObj.details + '\n\nEnter the *New Details* :', markD);
             $.waitForRequest
                 .then($ => {
                     dataObj.details = $.message.text;
-                    $.sendMessage(`Details Updated! New Details are : \n\n${dataObj.details}`);
+                    $.sendMessage(`Details Updated! *New Details* are : \n\n${dataObj.details}`, markD);
                 });
         } else
             $.sendMessage('You are not authorized for this command!');
@@ -189,11 +203,11 @@ class CommandController extends Telegram.TelegramBaseController {
 
     editCriteriaHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            $.sendMessage('Old Judging Criteria : \n\n' + dataObj.criteria + '\n\nEnter the New Judging Criteria :');
+            $.sendMessage('Old *Judging Criteria* : \n\n' + dataObj.criteria + '\n\nEnter the *New Judging Criteria* :', markD);
             $.waitForRequest
                 .then($ => {
                     dataObj.criteria = $.message.text;
-                    $.sendMessage(`Judging Criteria Updated! New Judging Criteria is : \n\n${dataObj.criteria}`);
+                    $.sendMessage(`Judging Criteria Updated! *New Judging Criteria* is : \n\n${dataObj.criteria}`, markD);
                 });
         } else
             $.sendMessage('You are not authorized for this command!');
@@ -201,11 +215,11 @@ class CommandController extends Telegram.TelegramBaseController {
 
     editScheduleHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            $.sendMessage('Old Schedule : \n\n' + dataObj.schedule + '\n\nEnter the New Schedule :');
+            $.sendMessage('*Old Schedule* : \n\n' + dataObj.schedule + '\n\nEnter the *New Schedule* :', markD);
             $.waitForRequest
                 .then($ => {
                     dataObj.schedule = $.message.text;
-                    $.sendMessage(`Schedule Updated! New Schedule is : \n\n${dataObj.schedule}`);
+                    $.sendMessage(`Schedule Updated! *New Schedule* is : \n\n${dataObj.schedule}`, markD);
                 });
         } else
             $.sendMessage('You are not authorized for this command!');
@@ -221,7 +235,7 @@ class CommandController extends Telegram.TelegramBaseController {
                     $.waitForRequest
                         .then($ => {
                             dataObj.location.longitude = $.message.text;
-                            $.sendMessage(`Location Updated! New Location is : `);
+                            $.sendMessage(`Location Updated! *New Location* is : `, markD);
                             $.sendLocation(dataObj.location.latitude, dataObj.location.longitude);
                         })
                 });
@@ -231,11 +245,11 @@ class CommandController extends Telegram.TelegramBaseController {
 
     allSubscribersHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
-            let subscribersList = 'List of Subscribers\n\n';
+            let subscribersList = '*List of Subscribers*\n\n';
             dataObj.subscribers.forEach((subscriber, i) => {
                 subscribersList += `${i+1}. ${subscriber.firstName} ${subscriber.lastName}\n`;
             })
-            $.sendMessage(subscribersList);
+            $.sendMessage(subscribersList, markD);
         } else
             $.sendMessage('You are not authorized for this command!');
     }
@@ -246,13 +260,14 @@ class CommandController extends Telegram.TelegramBaseController {
             $.waitForRequest
                 .then($ => {
                     if (!$.message.text) {
-                        $.sendMessage(`Can't seem to understand this format. Please try again with a plain text announcement!`);
+                        $.sendMessage(`Can't seem to understand this format. Please try again with a plain text /announcement`);
                         return;
                     }
                     dataObj.announcements.push($.message.text);
                     dataObj.subscribers.forEach(subscriber => {
-                        $.sendMessage(`ANNOUNCEMENT\n\n${$.message.text}`, {
-                            'chat_id': subscriber.chatID
+                        $.sendMessage(`*ANNOUNCEMENT*\n\n${$.message.text}`, {
+                            'chat_id': subscriber.chatID,
+                            'parse_mode': 'Markdown'
                         });
                     });
                     $.sendMessage(`${$.message.text}\n\nThis announcement has been sent to all the subscribers.`);
@@ -268,11 +283,10 @@ class CommandController extends Telegram.TelegramBaseController {
                 .then($ => {
                     const fileID = $.message.photo[$.message.photo.length - 1].fileId;
                     dataObj.subscribers.forEach(subscriber => {
-                        $.sendMessage(`Broadcast Image :`, {
-                            'chat_id': subscriber.chatID
-                        });
                         $.sendPhoto(fileID, {
-                            'chat_id': subscriber.chatID
+                            'chat_id': subscriber.chatID,
+                            'caption': 'Organisers shared an Image.',
+                            'parse_mode': 'Markdown'
                         });
                     });
                     $.sendMessage(`This image has been shared with all the subscribers.`);
@@ -284,11 +298,11 @@ class CommandController extends Telegram.TelegramBaseController {
     allFeedbacksHandler($) {
         if ($.message.from.username == dataObj.masterUserName) {
             if (dataObj.feedbacks.length == 0)
-                $.sendMessage(`No Feedbacks received yet. You can make an /announcement and ask your subscribers for feedbacks`);
+                $.sendMessage(`No Feedbacks received yet. You can make an /announcement and ask your subscribers for feedback`);
             else {
-                $.sendMessage(`ALL FEEDBACKS`);
+                $.sendMessage(`*ALL FEEDBACKS*`, markD);
                 dataObj.feedbacks.forEach((feedback, index) => {
-                    $.sendMessage(`FEEDBACK #${index+1}\nfrom @${feedback.username}\n\n${feedback.feedback}`);
+                    $.sendMessage(`*FEEDBACK #${index+1}*\nfrom @${feedback.username}\n\n${feedback.feedback}`, markD);
                 })
             }
         } else
@@ -298,15 +312,10 @@ class CommandController extends Telegram.TelegramBaseController {
     // TESTING FEATURES-----------------------------------------------------
     testHandler($) {}
 
-    helpHandler($) {
-        $.sendMessage(dataObj.help, {
-            "parse_mode": "Markdown"
-        });
-    }
-
     // ROUTES---------------------------------------------------------------
     get routes() {
         return {
+            'helpCommand': 'helpHandler',
             'detailsCommand': 'detailsHandler',
             'criteriaCommand': 'criteriaHandler',
             'scheduleCommand': 'scheduleHandler',
@@ -329,7 +338,6 @@ class CommandController extends Telegram.TelegramBaseController {
             'allFeedbacksCommand': 'allFeedbacksHandler',
 
             'testCommand': 'testHandler',
-            'helpCommand': 'helpHandler'
         };
     }
 }
