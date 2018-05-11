@@ -101,10 +101,36 @@ class CommandController extends Telegram.TelegramBaseController {
 
     feedbackHandler($) {
         $.sendMessage(`We'd love to hear from you. Even if it is critisicm. :D\nPlease enter your feedback.`);
+        // var options = {
+        //     reply_markup: JSON.stringify({
+        //       inline_keyboard: [
+        //         [{ text: 'Some button text 1', url: '/asdf' }],
+        //         [{ text: 'Some button text 2', callback_data: '2' }],
+        //         [{ text: 'Some button text 3', callback_data: '3' }]
+        //       ]
+        //     })
+        //   };
+        // $.sendMessage("Lol", options);
+        // $.runInlineMenu({
+        //     layout: 1,
+        //     method: 'sendMessage',
+        //     params: [`We'd love to hear from you. Even if it is critisicm. :D\nPlease enter your feedback.`],
+        //     menu: [{
+        //         text: 'Cancel',
+        //         callback: (callbackQuery, message) => {
+        //             $.sendMessage('Cancel');
+        //             console.log($);
+        //             $.waitingRequests = {};
+        //         }
+        //     }]
+        // })
         $.waitForRequest
             .then($ => {
                 if (!$.message.text) {
                     $.sendMessage(`Can't seem to understand this format. Please try again with a plain text announcement!`);
+                    return;
+                } else if ($.message.text == 'Cancel') {
+                    $.sendMessage(`Alright!`);
                     return;
                 }
                 const newFeedback = {
