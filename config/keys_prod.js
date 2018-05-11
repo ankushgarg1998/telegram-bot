@@ -1,3 +1,3 @@
 module.exports = {
-    token: 'process.env.token'
+    token: process.env.token
 }
