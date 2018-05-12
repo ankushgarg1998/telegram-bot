@@ -11,6 +11,11 @@ Developed by [Ankush Garg](https://ankushgarg1998.github.io/) & [Ekta Sangwan](h
 ## FEATURES
 
 ### 1. Common questions of the applicants
+
+<img src="./assets/details.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/schedule.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/location.gif" alt="drawing" style="width: 250px;"/>
+
 Most Commonly, applicants redundantly ask question about details, schedule, location, itinerary, judging criteria etc. All these questions can be answered by the bot, saving organisers a load of time. HACKABOT provides the organisers with the liberty to update the details, schedule, judging criteria and location anytime (and make an announcement to notify all subscribers).
 
 <hr>
