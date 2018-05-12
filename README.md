@@ -26,6 +26,8 @@ Most Commonly, applicants redundantly ask question about details, schedule, loca
 
 ### 2. Poster with the details
 
+
+<br><br>
 <img src="./assets/Poster1.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="./assets/Poster2.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
 
