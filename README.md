@@ -43,6 +43,10 @@ Though the bot for a Hackathon will be open to all, but any interested user can 
 <hr>
 
 ### 4. Announcement and Broadcasting for Organisers
+
+<img src="./assets/announce-1.gif" alt="drawing" width="270px"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/announce-2.gif" alt="drawing" width="270px"/>
+
 The organiser can either make a text announcement using */announcement* or broadcast an image using */broadcastPic* that will be sent to all the subscribers instantly.
 
 <hr>
@@ -58,6 +62,11 @@ Participants can send feedbacks using command */feedback* about the hackathon to
 <hr>
 
 ### 7. All Announcements, All Feedbacks, All Subscribers
+
+<img src="./assets/all-1.gif" alt="drawing" width="270px"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/all-2.png" alt="drawing" width="250px"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/all-3.png" alt="drawing" width="250px"/>
+
 - */allannouncements* is for participants that show all announcements in case he missed any.
 - */allFeedbacks* is for the organisers to see all feedbacks together.
 - */allSubscribers* is for organisers to retrieve a list of the Subscribers.
