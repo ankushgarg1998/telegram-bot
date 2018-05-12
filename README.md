@@ -18,14 +18,26 @@ Developed by [Ankush Garg](https://ankushgarg1998.github.io/) & [Ekta Sangwan](h
 
 Most Commonly, applicants redundantly ask question about details, schedule, location, itinerary, judging criteria etc. All these questions can be answered by the bot, saving organisers a load of time. HACKABOT provides the organisers with the liberty to update the details, schedule, judging criteria and location anytime (and make an announcement to notify all subscribers).
 
+<img src="./assets/edit-criteria1.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/edit-criteria2.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/edit-location.png" alt="drawing" style="width: 230px;"/>
+
 <hr>
 
 ### 2. Poster with the details
+
+<img src="./assets/Poster1.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/Poster2.png" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+
 Organisers can add a Poster to be sent with the details, update it or remove it anytime.
 
 <hr>
 
 ### 3. Subscribe/Unsubscribe to the updates
+
+<img src="./assets/subscribe-par.gif" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/subscribe-org.gif" alt="drawing" style="width: 230px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+
 Though the bot for a Hackathon will be open to all, but any interested user can */subscribe* to the updates. All the Subscribers will receive every broadcasted message/image or announcement made by organisers. As soon as any user subscribes or unsubscribes the organiser account is instantly notified.
 
 <hr>
