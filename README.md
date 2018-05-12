@@ -78,5 +78,54 @@ Participants can send feedbacks using command */feedback* about the hackathon to
 
 <hr>
 
+## All Commands Documentation
+You can control HACKABOT by sending these commands:
+
+- **/help** - Gets this message anytime, if you're stuck.
+
+### Participant Commands
+- **/details** - Shows Details of the Hackathon
+- **/judgingcriteria** - Shows Judging Criteria
+- **/schedule** - Shows Schedule of the Hack
+- **/location** - Venue of the Event
+- **/subscribe** - Subscribe to updates of this Hackathon
+- **/unsubscribe** - Unsubscribe from updates of this Hackathon
+- **/allannouncements** - Shows the List of all the announcements happened yet
+- **/sharepic** - You can share your click with the organisers
+- **/feedback** - You can send feedback to the organisers of the Hack
+
+But wait, you don't actually have to type these commands. See that *[/]* (slash box) at the bottom-right. Just press that and you can select any command.
+
+### Commands for Organisers
+*(You have to be an organiser to be able to use these)*
+
+- **/editDetails** - Edit the Details Message
+- **/editCriteria** - Edit the Judging Criteria
+- **/editSchedule** - Edit the Schedule Message
+- **/newPoster** - Add/Update a poster to your hackathon. This poster is shared with the Details to the participants.
+- **/removePoster** - No Poster will be shared.
+- **/editLocation** - Edit the Venue(Longitudes, Latitudes) of the Hack
+- **/allSubscribers** - View a list of all the subscribers
+- **/announcement** - You can make an announcement that'll be pushed to all subscribers as a message instantly
+- **/broadcastPic** - Broadcast a pic to all the subscribers
+- **/allFeedbacks** - Fetches all the feedbacks received yet.
+
+HAPPY HACKING!
+
+<hr>
+
+## Upcoming Features
+- Support for Multiple Organiser Accounts
+- Buttons for Organising accounts.
+- Feature to see other upcoming Hackathons, by date or by nearby (uses user location).
+- Applying to the Hackathon through the bot itself.
+
+<hr>
+
+## CONTRIBUTE
+- Raise an issue and tell us you're working on it. Or work on an existing issue.
+- Fork the repository
+- Commit your code
+- Create a Pull Request
 
 [MIT Licence](https://github.com/ankushgarg1998/telegram-bot/blob/master/LICENSE) © [Ankush Garg](https://ankushgarg1998.github.io/)
