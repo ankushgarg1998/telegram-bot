@@ -4,7 +4,9 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ankushgarg1998/telegram-bot)  &nbsp;&nbsp;
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ankushgarg1998/telegram-bot)
 
-**HACKABOT** is a [**telegram bot**](https://telegram.org/blog/bot-revolution) for Hackathon participants and organisers. It is developed in [NodeJS](https://nodejs.org/en/) is live on Telegram as [@thisankush_bot](https://web.telegram.org/#/im?p=@thisankush_bot). It is supposed to answer common questions of participants during a Hackathon and help organisers in keeping participants/applicants updated with latest news.
+**HACKABOT** is a [**telegram bot**](https://telegram.org/blog/bot-revolution) for Hackathon participants and organisers. It is developed in [NodeJS](https://nodejs.org/en/) is live on Telegram as [@The_Hackathon_Bot](https://web.telegram.org/#/im?p=@The_Hackathon_Bot). It is supposed to answer common questions of participants during a Hackathon and help organisers in keeping participants/applicants updated with latest news.
+
+Developed by [Ankush Garg](https://ankushgarg1998.github.io/) & [Ekta Sangwan](http://github.com/ektasangwan).
 
 ## FEATURES
 
