@@ -44,8 +44,8 @@ Though the bot for a Hackathon will be open to all, but any interested user can 
 
 ### 4. Announcement and Broadcasting for Organisers
 
-<img src="./assets/announce-1.gif" alt="drawing" width="270px"/>&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./assets/announce-2.gif" alt="drawing" width="270px"/>
+<img src="./assets/announce-1.png" alt="drawing" width="270px"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./assets/announce-2.png" alt="drawing" width="270px"/>
 
 The organiser can either make a text announcement using */announcement* or broadcast an image using */broadcastPic* that will be sent to all the subscribers instantly.
 
