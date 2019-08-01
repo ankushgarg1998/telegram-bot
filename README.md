@@ -10,7 +10,9 @@ Developed by [Ankush Garg](https://ankushgarg1998.github.io/) & [Ekta Sangwan](h
 
 ## Winner of [The Hacksociety](https://www.hacksociety.tech/)'s [Telegram Bot Challenge](https://www.hacksociety.tech/attend/challenge/telegram-bot).
 
-<iframe width="853" height="480" src="https://www.youtube.com/embed/5wchrayd0-Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<figure class="video_container">
+  <iframe width="853" height="480" src="https://www.youtube.com/embed/5wchrayd0-Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</figure>
 
 ## FEATURES
 
